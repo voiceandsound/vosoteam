@@ -1,0 +1,95 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>VOSO Apps</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.0.min.js"></script>
+</head>
+
+<body>
+  
+  <div id="main">
+     
+     <div>
+    <input type="text" class="form-control" name="name" id="name" placeholder="Name" />
+    </div>
+    <div>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+    </div>
+    <p><input type="submit" id="LoginBtn" name="LoginBtn" value="Login"></p>
+    
+    <div>
+    <input type="text" class="form-control" name="signname" id="signname" placeholder="Name" />
+    </div>
+    <div>
+    <input type="password" class="form-control" name="signpassword" id="signpassword" placeholder="Password" />
+    </div>
+    <p><input type="submit" id="SignupBtn" name="SignupBtn" value="Signup"></p>
+
+    
+  </div>
+
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+
+    Parse.initialize("pbSqqYyU5w8Cl1uTLQIoSUty1YsAFpry80vYTcoZ", "BmyUVD29XTG1nBM3XxyOUzT4UzJcfHw1alG6PpiK");
+
+    $("#LoginBtn").click(function(e) {
+      e.preventDefault();
+    
+    var name = $("#name").val();
+    var password = $("#password").val();
+
+    var user = new Parse.User();
+      
+  // other fields can be set just like with Parse.Object
+    
+        Parse.User.logIn(name, password, {
+        success: function(user) {
+      // Hooray! Let them use the app now.
+      window.location.href='index.html'
+    },
+    error: function(user, error) {
+      // Show the error message somewhere and let the user try again.
+      alert("Error: " + error.code + " " + error.message);
+    }
+  })
+  })
+
+    $("#SignupBtn").click(function(e) {
+      e.preventDefault();
+    
+    var name = $("#signname").val();
+    var password = $("#signpassword").val();
+
+    var user = new Parse.User();
+    user.set("username", name);
+    user.set("password", password);
+        
+    // other fields can be set just like with Parse.Object
+      
+    user.signUp(null, {
+      success: function(user) {
+        // Hooray! Let them use the app now.
+        window.location.href='index.html';
+      },
+      error: function(user, error) {
+        // Show the error message somewhere and let the user try again.
+        alert("Error: " + error.code + " " + error.message);
+      }
+    })
+    })
+  });
+
+    
+  </script>
+
+  </body>
+
+</html>
